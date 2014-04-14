@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+     <meta charset="utf-8">
+     <title>jQuery UI Draggable - Snap to element or grid</title>
+     <script src="../../jquery-1.9.1.js"></script>
+     <script src="../../ui/jquery.ui.core.js"></script>
+     <script src="../../ui/jquery.ui.widget.js"></script>
+     <script src="../../ui/jquery.ui.mouse.js"></script>
+     <script src="../../ui/jquery.ui.draggable.js"></script>
+     <script src="../../ui/jquery.ui.sortable.js"></script>
+     <link rel="stylesheet" href="../demos.css">
+     <style>
+    .ui-widget-content {border: 3px solid Azure; margin: 1px; padding:1px; background-color:LightCoral; }
+     .draggable {width: 78px; height: 78px; font-size: .9em; float: left; margin: 0; padding: 0; }
+     .ui-widget-target p { margin: 0; padding: 0; background-color: Black; color: White; font: Serif; text-align: center; height: 15px;}
+     .ui-widget-content p { margin: 1; padding: 0; text-align: center; font: Serif; font-size: 1.8em; }
+     #snaptarget { background-color: CadetBlue; height: 480px; width: 252px; }
+     #result4 {font-size: 1.5em;}
+     </style>
+     <script>
+     $(function() {
+          $( "#Phone" ).draggable({ snap: true, grid: [ 80, 80 ]});
+          $( "#People" ).draggable({ snap: true, });
+          $( "#Messaging" ).draggable({ snap: true, });
+          $( "#Email" ).draggable({ snap: true, });
+          $( "#Setting" ).draggable({ snap: true, });
+          $( "#Calendar" ).draggable({ snap: true, });
+          $( "#Camera" ).draggable({ snap: true, });
+          $( "#Gallery" ).draggable({ snap: true, });
+          $( "#MixRadio" ).draggable({ snap: true, });
+          $( "#HERE" ).draggable({ snap: true, });
+     });
+
+     function CalculatePosition(item) {
+          //if (($("#Phone").position().top <= 105) && ($("#Phone").position().left <= 88))
+          //{
+               //alert("Phone position is ONE");
+               //document.getElementById("result").innerHTML="Phone(0,0,0,1,1)"
+          //}
+         //alert($("#Phone").position().top);
+         //alert($("#Phone").position().left);
+         //alert($("#Phone").draggable("option"))
+         /*
+         $(".draggable").position({
+              of: $("#snaptarget"),
+              my: "center",
+              at: "center"
+         });
+        */
+
+        Document_pos = $("html").position();
+        Snaptarget_pos = $("#snaptarget").position();
+        item_pos = $("#" + item).position();
+        //Phone_relative_pos.left = Phone_pos.left - Snaptarget_pos.left;
+        //Phone_relative_pos.top = Phone_pos.top - Snaptarget_pos.top;
+
+         document.getElementById("result1").innerHTML=("Document_pos Left position:" + Document_pos.left + "  Document_pos Top position:" + Document_pos.top);
+        document.getElementById("result2").innerHTML=("Snaptarget_pos Left position:" + Snaptarget_pos.left + "  Snaptarget_pos Top position:" + Snaptarget_pos.top);
+         document.getElementById("result3").innerHTML=("item_pos left:" + (item_pos.left - Snaptarget_pos.left) + "  item_pos top:" + (item_pos.top - Snaptarget_pos.top));
+
+         row_num = Math.floor( ( item_pos.top - 15 )/80 );
+         column_num = Math.floor( ( item_pos.left )/80 );
+
+         return {row: row_num, column: column_num};
+         //return { row:1, column:1 };
+     }
+
+    function SaveLayout(){
+         var item_arr = [ "Phone", "People", "Messaging", "Email", "Setting", "Calendar", "Camera", "Gallery", "MixRadio", "HERE" ];
+        $( "#result4" ).text("Here is the result:    " );
+          $.each( item_arr, function( item_index, item_val ) {
+            //item_pos = $( "#" + item_val ).position();
+            //alert(item_val + "item_pos left" + item_pos.left + "item_pos top" + item_pos.top);           
+            //$( "#result4" ).text(item_val + "position is" + item_pos.left + "|" + item_pos.top);
+            //$( "#result4" ).append( document.createTextNode( item_val + "position is" + item_pos.left + "|" + item_pos.top ) );
+            //$( "#result4" ).html("<br/>");
+            //document.getElementById("result4").innerHTML("<br />");
+            //$( "#result4" ).append( document.createTextNode( "<p>" + CalculatePosition( item_val )) + "</p>" );
+            var result = CalculatePosition( item_val );
+            $( "#result4" ).append( document.createTextNode( item_val + ": (" + result.row + "," + result.column + ")" ) );
+
+          });
+    }
+
+     </script>
+</head>
+<body>
+
+<div id="snaptarget" class="ui-widget-target">
+     <p>The AOL Phone Mainmenu</p>
+</div>
+
+<br style="clear:both" />
+
+<div id="Phone" class="draggable ui-widget-content">
+     <p>Phone</p>
+</div>
+
+<div id="People" class="draggable ui-widget-content">
+     <p>People</p>
+</div>
+
+<div id="Messaging" class="draggable ui-widget-content">
+     <p>Messaging</p>
+</div>
+
+<div id="Email" class="draggable ui-widget-content">
+     <p>Email</p>
+</div>
+
+<div id="Setting" class="draggable ui-widget-content">
+     <p>Setting</p>
+</div>
+
+<div id="Calendar" class="draggable ui-widget-content">
+     <p>Calendar</p>
+</div>
+
+<div id="Camera" class="draggable ui-widget-content">
+     <p>Camera</p>
+</div>
+
+<div id="Gallery" class="draggable ui-widget-content">
+     <p>Gallery</p>
+</div>
+
+<div id="MixRadio" class="draggable ui-widget-content">
+     <p>MixRadio</p>
+</div>
+
+<div id="HERE" class="draggable ui-widget-content">
+     <p>HERE</p>
+</div>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<p>
+<button type="button" onclick="CalculatePosition()">CalculatePosition</button>
+<button type="button2" onclick="SaveLayout()">SaveLayout</button>
+</p>
+
+<p id="result1">
+Config result here
+</p>
+<p id="result2">
+Config result here
+</p>
+<p id="result3">
+Config result here
+</p>
+<p id="result4">
+Config result here
+</p>
+</body>
+</html>
